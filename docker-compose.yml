@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sample
+      MYSQL_PASSWORD: password
+    ports:
+      - 4306:3306
+    volumes:
+      - mysql-db:/var/lib/mysql
+  back:
+    tty: true
+    depends_on:
+      - db
+    build:
+      context: ./back/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./back:/app
+    command: sh -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      DB_HOST: db
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/usr/src/app
+    command:  sh -c "npm install && npm run dev"
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - '8000:3000'
+volumes:
+  mysql-db:
+    driver: local
