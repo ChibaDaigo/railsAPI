@@ -24,3 +24,14 @@ Post.create!(
       },
     ]
   )
+Account.create!(
+  [
+    {
+      name: 'seedアカウント',
+      email: 'seedEmail',
+      password_digest: 'seedPassword',
+      tel: 'seedTel',
+      role: 'seedRole'
+    }
+  ]
+)

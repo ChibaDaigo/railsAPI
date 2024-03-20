@@ -1,5 +1,6 @@
+"use client";
 import { FC } from 'react';
-
+import Link from 'next/link';
 type Post = {
   id: number;
   title: string;
@@ -22,7 +23,8 @@ const Home: FC = async () => {
     <div >
       <h1>API test</h1>
       <h1>Post List</h1>
-      {posts.map((post) => (
+      <Link href={"/account"}>アカウント登録ページへ</Link>
+      {posts && posts.map((post) => (
         <p key={post.id}>
           {post.title}
         </p>
