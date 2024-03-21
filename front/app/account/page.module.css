@@ -73,3 +73,9 @@
   background-color: #f3f3f3;
   cursor: pointer;
 }
+
+.container span {
+  padding: 20px;
+  display: inline;
+  color: red;
+}

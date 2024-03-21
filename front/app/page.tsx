@@ -1,12 +1,12 @@
-"use client";
-import { FC } from 'react';
+
+import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 type Post = {
   id: number;
   title: string;
 };
 
-async function getPost() {
+async function getPosts() {
   const res = await fetch('http://back:3000/posts', { cache: "no-store" });
 
   if (!res.ok) {
@@ -17,13 +17,12 @@ async function getPost() {
 }
 
 const Home: FC = async () => {
-  const posts: Post[] = await getPost();
-  console.log(posts);
+  const posts: Post[] =  await getPosts();
   return (
     <div >
-      <h1>API test</h1>
       <h1>Post List</h1>
       <Link href={"/account"}>アカウント登録ページへ</Link>
+      <Link href={"/accountlist"}>アカウントリストページへ</Link>
       {posts && posts.map((post) => (
         <p key={post.id}>
           {post.title}
@@ -31,6 +30,7 @@ const Home: FC = async () => {
       ))}
     </div>
   );
+  
 };
 
 export default Home;
